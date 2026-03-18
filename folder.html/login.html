@@ -1,0 +1,130 @@
+
+Here’s a single working file for your Transit Express login form with everything included — HTML, Tailwind styling, and JavaScript logic all in one place. This way you don’t have to worry about linking separate files.
+
+📄 Complete Login Form (All-in-One)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Transit Express - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+ <!-- nav bar -->
+   <header class="fixed top-0 left-0 w-full bg-gray-100 shadow-md z-50">
+  <div class="container mx-auto flex flex-wrap p-5 items-center justify-between">
+    
+    <!-- Brand -->
+    <a class="flex title-font font-bold items-center text-orange-500 text-2xl">
+      Transit Express
+    </a>
+
+    <!-- Hamburger Toggle (Mobile Only) -->
+    <input type="checkbox" id="menu-toggle" class="hidden peer" />
+    <label for="menu-toggle" class="md:hidden cursor-pointer text-orange-500">
+      <!-- Hamburger Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" 
+           viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </label>
+
+    <!-- Navigation -->
+    <nav class="hidden peer-checked:flex md:flex flex-col md:flex-row md:items-center md:space-x-6 bg-gray-100 md:bg-transparent w-full md:w-auto mt-4 md:mt-0 p-4 md:p-0">
+      <a href="index.html" class="text-orange-500 hover:text-blue-600 font-medium">Home</a>
+      <a href="routes.html" class="text-orange-500 hover:text-blue-600 font-medium">Routes</a>
+      <a href="courier.html" class="text-orange-500 hover:text-blue-600 font-medium">Courier Services</a>
+      <a href="booking.html" class="text-orange-500 hover:text-blue-600 font-medium">Booking</a>
+      <a href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium mt-2 md:mt-0">Login</a>
+    </nav>
+  </div>
+</header>
+
+
+
+
+
+
+  <div class="bg-white sm:bg-gray-200 min-h-screen w-screen flex flex-col justify-center items-center">
+    <div class="bg-white shadow-lg px-8 sm:px-12 w-full sm:w-8/12 md:w-7/12 lg:w-7/12 xl:w-2/6 py-8">
+      
+      <!-- Title -->
+      <div class="text-center w-full font-bold text-3xl text-orange-500 p-4">
+        Transit Express
+      </div>
+      
+      <div class="w-full bg-gray-200 my-3" style="height: 1px"></div>
+      
+      <form id="loginForm">
+        <div class="flex flex-col gap-4 px-0 py-4">
+          
+          <!-- Email -->
+          <div>
+            <label class="text-gray-700">Email address</label>
+            <input id="loginEmail" class="py-2 pl-3 border border-gray-200 w-full" placeholder="Email address" type="email" required />
+          </div>
+          
+          <!-- Password -->
+          <div>
+            <label class="text-gray-700">Password</label>
+            <input id="loginPassword" class="py-2 pl-3 border border-gray-200 w-full" placeholder="Password" type="password" required />
+          </div>
+          
+          <!-- Buttons -->
+          <div class="w-full flex flex-row gap-2">
+            <button class="border border-blue-500 bg-blue-500 text-white hover:bg-blue-600 duration-100 ease-in-out w-6/12 p-2 flex justify-center items-center" type="submit">
+              Login
+            </button>
+            <a href="signup.html" class="border border-blue-500 bg-blue-500 text-white hover:bg-blue-600 duration-100 ease-in-out w-6/12 p-2 flex justify-center items-center text-center">
+              Sign Up
+            </a>
+          </div>
+          
+          <!-- Forgot Password -->
+          <div class="w-full flex flex-row justify-end mt-2">
+            <a href="#" id="forgotPassword" class="text-blue-500 hover:underline">Forgot password?</a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="p-4">© Transit Express 2026</div>
+  </div>
+  <!-- Inline JavaScript -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("loginForm");
+      const forgotPasswordLink = document.getElementById("forgotPassword");
+
+      // Handle login
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const email = document.getElementById("loginEmail").value;
+        const password = document.getElementById("loginPassword").value;
+
+        if (email && password) {
+          alert("✅ Login successful! Welcome back to Transit Express.");
+        } else {
+          alert("⚠️ Please enter your email and password.");
+        }
+      });
+
+      // Handle forgot password
+      forgotPasswordLink.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const userEmail = prompt("Enter your email to reset password:");
+
+        if (userEmail) {
+          // Save email locally (demo purpose)
+          localStorage.setItem("resetEmail", userEmail);
+
+          alert("📩 Password reset link sent to " + userEmail + ". You can now log in.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
