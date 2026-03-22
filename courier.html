@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Courier</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="courier.js" defer></script>
+  </head>
+  <body>
+    <!-- nav bar -->
+    <header class="fixed top-0 left-0 w-full bg-gray-100 shadow-md z-50">
+      <div
+        class="container mx-auto flex flex-wrap p-5 items-center justify-between"
+      >
+        <!-- Brand -->
+        <a
+          class="flex title-font font-bold items-center text-orange-500 text-2xl"
+        >
+          Transit Express
+        </a>
+
+        <!-- Hamburger Toggle (Mobile Only) -->
+        <input type="checkbox" id="menu-toggle" class="hidden peer" />
+        <label
+          for="menu-toggle"
+          class="md:hidden cursor-pointer text-orange-500"
+        >
+          <!-- Hamburger Icon -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </label>
+
+        <!-- Navigation -->
+        <nav
+          class="hidden peer-checked:flex md:flex flex-col md:flex-row md:items-center md:space-x-6 bg-gray-100 md:bg-transparent w-full md:w-auto mt-4 md:mt-0 p-4 md:p-0"
+        >
+          <a
+            href="index.html"
+            class="text-orange-500 hover:text-blue-600 font-medium"
+            >Home</a
+          >
+          <a
+            href="routes.html"
+            class="text-orange-500 hover:text-blue-600 font-medium"
+            >Routes</a
+          >
+          <a
+            href="courier.html"
+            class="text-orange-500 hover:text-blue-600 font-medium"
+            >Courier Services</a
+          >
+          <a
+            href="booking.html"
+            class="text-orange-500 hover:text-blue-600 font-medium"
+            >Booking</a
+          >
+          <a
+            href="login.html"
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium mt-2 md:mt-0"
+            >Login</a
+          >
+        </nav>
+      </div>
+    </header>
+
+   <!-- hero section -->
+<section class="text-gray-600 body-font bg-white">
+  <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center ">
+    
+    <!-- Text Content -->
+    <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-bold text-orange-500">
+        Fast & Reliable Courier Services
+        <br class="hidden lg:inline-block">Across Kenya
+      </h1>
+      <p class="mb-8 leading-relaxed text-gray-700">
+        Transit Express ensures your parcels are delivered safely and on time. 
+        Whether it’s documents, packages, or bulk shipments, we provide trusted 
+        courier solutions tailored to your needs.
+      </p>
+    </div>
+
+    <!-- Hero Image -->
+    <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+      <img class="object-cover object-center rounded shadow-lg" alt="Courier Hero" src="images/courier.jpg">
+    </div>
+  </div>
+</section>
+
+
+    <!-- Courier Form Section -->
+    <div class="pt-32 px-4 py-12">
+      <div class="bg-gray-100 p-8 rounded-lg shadow-md max-w-xl mx-auto">
+        <h2 class="text-3xl font-bold text-orange-500 mb-6 text-center">
+          Courier Details
+        </h2>
+
+        <form class="space-y-6 text-gray-700">
+          <!-- Name -->
+          <div>
+            <label class="block font-semibold text-gray-900">Name</label>
+            <input
+              id="clientName"
+              type="text"
+              class="w-full border border-gray-300 rounded px-4 py-2 text-black"
+              placeholder="Your Name"
+            />
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label class="block font-semibold text-gray-900">Email</label>
+            <input
+              id="clientEmail"
+              type="email"
+              class="w-full border border-gray-300 rounded px-4 py-2 text-black"
+              placeholder="Your Email"
+            />
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label class="block font-semibold text-gray-900"
+              >Phone Number</label
+            >
+            <input
+              id="clientPhone"
+              type="tel"
+              class="w-full border border-gray-300 rounded px-4 py-2 text-black"
+              placeholder="e.g. +254 712 345678"
+            />
+          </div>
+
+          <!-- Pickup Station -->
+          <div>
+            <label class="block font-semibold text-gray-900"
+              >Pickup Station</label
+            >
+            <select
+              id="pickupStation"
+              class="w-full border border-gray-300 rounded px-4 py-2 text-black"
+            >
+              <option value="">Select Pickup Station</option>
+              <option value="CBD">CBD</option>
+              <option value="Westlands">Westlands</option>
+              <option value="Thika">Thika</option>
+              <option value="Rongai">Rongai</option>
+              <option value="Karen">Karen</option>
+              <option value="JKIA">JKIA</option>
+              <option value="Kitengela">Kitengela</option>
+              <option value="Ngong">Ngong</option>
+              <option value="Mombasa Road">Mombasa Road</option>
+              <option value="South B">South B</option>
+            </select>
+          </div>
+
+          <!-- Drop-off Station -->
+          <div>
+            <label class="block font-semibold text-gray-900"
+              >Drop-off Station</label
+            >
+            <select
+              id="dropoffStation"
+              class="w-full border border-gray-300 rounded px-4 py-2 text-black"
+            >
+              <option value="">Select Drop-off Station</option>
+              <option value="CBD">CBD</option>
+              <option value="Westlands">Westlands</option>
+              <option value="Thika">Thika</option>
+              <option value="Rongai">Rongai</option>
+              <option value="Karen">Karen</option>
+              <option value="JKIA">JKIA</option>
+              <option value="Kitengela">Kitengela</option>
+              <option value="Ngong">Ngong</option>
+              <option value="Mombasa Road">Mombasa Road</option>
+              <option value="South B">South B</option>
+            </select>
+          </div>
+
+          <!-- Parcel Description -->
+          <div>
+            <label class="block font-semibold text-gray-900"
+              >Parcel Description</label
+            >
+            <textarea
+              id="parcelDescription"
+              class="w-full border border-gray-300 rounded px-4 py-2 text-black"
+              rows="3"
+              placeholder="Describe your parcel"
+            ></textarea>
+          </div>
+
+          <!-- Number of Parcels -->
+          <div>
+            <label class="block font-semibold text-gray-900"
+              >Number of Parcels</label
+            >
+            <input
+              id="parcelCount"
+              type="number"
+              min="1"
+              value="1"
+              class="w-full border border-gray-300 rounded px-4 py-2 text-black"
+              oninput="calculatePrice()"
+            />
+          </div>
+
+          <!-- Exact Weight -->
+          <div>
+            <label class="block font-semibold text-gray-900">Weight (kg)</label>
+            <input
+              id="parcelWeight"
+              type="number"
+              min="1"
+              value="1"
+              class="w-full border border-gray-300 rounded px-4 py-2 text-black"
+              oninput="calculatePrice()"
+            />
+          </div>
+
+          <!-- Pickup Date & Time -->
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block font-semibold text-gray-900"
+                >Pickup Date</label
+              >
+              <input
+                id="pickupDate"
+                type="date"
+                class="w-full border border-gray-300 rounded px-4 py-2 text-black"
+              />
+            </div>
+            <div>
+              <label class="block font-semibold text-gray-900"
+                >Pickup Time</label
+              >
+              <input
+                id="pickupTime"
+                type="time"
+                class="w-full border border-gray-300 rounded px-4 py-2 text-black"
+              />
+            </div>
+          </div>
+
+          <!-- Weight Calculator -->
+          <div>
+            <p id="priceOutput" class="mt-2 text-indigo-600 font-semibold"></p>
+            <p class="text-sm text-gray-500">
+              Base rate: KES 100 per kg up to 30 kg. Each additional kg above 30
+              adds KES 150.
+            </p>
+          </div>
+
+         <button type="button" onclick="submitBooking()" 
+  class="bg-blue-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-700 transition w-full">
+  <a href="paycourier.html">Proceed to Payment</a>
+</button>
+
+
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
