@@ -1,98 +1,112 @@
-function calculatePrice() {
-  const weight = parseInt(document.getElementById('parcelWeight').value, 10) || 0;
-  const parcels = parseInt(document.getElementById('parcelCount').value, 10) || 1;
-  let price = 0;
 
-  if (weight > 0) {
-    const baseRate = 100;      // KES per kg up to 30 kg
-    const surchargeRate = 150; // KES per kg above 30
 
-    if (weight <= 30) {
-      price = weight * baseRate * parcels;
-    } else {
-      const extraKg = weight - 30;
-      price = (30 * baseRate + extraKg * surchargeRate) * parcels;
-    }
+document.addEventListener("DOMContentLoaded", () => {
+  const priceOutput = document.getElementById("priceOutput");
+  const ticketDiv = document.createElement("div");
+  ticketDiv.id = "courierTicket";
+  ticketDiv.className = "hidden mt-6 border p-6 rounded bg-gray-100 text-left";
+  ticketDiv.innerHTML = `
+    <h3 class="text-xl font-bold text-blue-600 mb-4">🎟 Courier Ticket</h3>
+    <p id="ticketDetails"></p>
+    <button id="cancelBtn" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 font-semibold mt-4">
+      Cancel Ticket
+    </button>
+  `;
+  document.querySelector(".bg-gray-100.p-8").appendChild(ticketDiv);
 
-    document.getElementById('priceOutput').innerText =
-      "Estimated Price: KES " + price;
-  } else {
-    document.getElementById('priceOutput').innerText = "";
+  let courierTickets = JSON.parse(localStorage.getItem("courierTickets")) || [];
+
+  // Show last ticket if exists
+  if (courierTickets.length > 0) {
+    showTicket(courierTickets[courierTickets.length - 1]);
   }
-}
 
-// Collect form data and redirect to payment page
-function submitBooking() {
-  const bookingData = {
-    name: document.getElementById('clientName').value,
-    email: document.getElementById('clientEmail').value,
-    phone: document.getElementById('clientPhone').value,
-    pickupStation: document.getElementById('pickupStation').value,
-    dropoffStation: document.getElementById('dropoffStation').value,
-    parcelDescription: document.getElementById('parcelDescription').value,
-    parcelCount: parseInt(document.getElementById('parcelCount').value, 10),
-    weight: parseInt(document.getElementById('parcelWeight').value, 10),
-    pickupDate: document.getElementById('pickupDate').value,
-    pickupTime: document.getElementById('pickupTime').value
+  // Price calculator
+  window.calculatePrice = function () {
+    const weight = parseFloat(document.getElementById("parcelWeight").value) || 0;
+    let price = 0;
+    if (weight <= 30) {
+      price = weight * 100;
+    } else {
+      price = (30 * 100) + ((weight - 30) * 150);
+    }
+    priceOutput.textContent = `Estimated Price: KES ${price}`;
+    return price;
   };
 
-  // Save booking data in localStorage so payment page can access it
-  localStorage.setItem("courierBooking", JSON.stringify(bookingData));
+  // Submit booking
+  window.submitBooking = function () {
+    const name = document.getElementById("clientName").value.trim();
+    const email = document.getElementById("clientEmail").value.trim();
+    const phone = document.getElementById("clientPhone").value.trim();
+    const pickupStation = document.getElementById("pickupStation").value;
+    const dropoffStation = document.getElementById("dropoffStation").value;
+    const description = document.getElementById("parcelDescription").value.trim();
+    const parcelCount = parseInt(document.getElementById("parcelCount").value, 10);
+    const weight = parseFloat(document.getElementById("parcelWeight").value);
+    const pickupDate = document.getElementById("pickupDate").value;
+    const pickupTime = document.getElementById("pickupTime").value;
 
-  // Redirect to mock payment page
-  window.location.href = "paycourier.html";
-}
+    if (!name || !email || !phone || !pickupStation || !dropoffStation || !pickupDate || !pickupTime) {
+      alert("Please fill in all required fields.");
+      return;
+    }
 
+    // ✅ Robust date/time validation before saving
+    const [year, month, day] = pickupDate.split("-").map(Number);
+    const [hours, minutes] = pickupTime.split(":").map(Number);
+    const departureDateTime = new Date(year, month - 1, day, hours, minutes);
+    const now = new Date();
 
+    if (now > departureDateTime) {
+      alert("⚠️ Sorry, this pickup time has already passed. Please choose a valid future time.");
+      return; // stop here, do not save ticket
+    }
 
-let parcels = [
+    const price = calculatePrice();
 
-  { id: 1, description: "Documents", status: "In Transit" },
-  { id: 2, description: "Electronics", status: "Arrived" }
-];
+    const ticket = {
+      name, email, phone,
+      pickupStation, dropoffStation,
+      description, parcelCount, weight,
+      pickupDate, pickupTime, price
+    };
 
-// Render cards
-function renderParcels() {
-  const container = document.getElementById("parcelCards");
-  container.innerHTML = "";
+    courierTickets.push(ticket);
+    localStorage.setItem("courierTickets", JSON.stringify(courierTickets));
 
-  parcels.forEach(parcel => {
-    const card = document.createElement("div");
-    card.className = "p-4 lg:w-1/2 md:w-full";
+    showTicket(ticket);
+  };
 
-    card.innerHTML = `
-      <div class="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col bg-white shadow-md">
-        <div class="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full 
-          ${parcel.status === "In Transit" ? "bg-blue-100 text-blue-500" : "bg-green-100 text-green-500"} flex-shrink-0">
-          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-            class="w-8 h-8" viewBox="0 0 24 24">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-          </svg>
-        </div>
-        <div class="flex-grow">
-          <h2 class="text-gray-900 text-lg title-font font-medium mb-3">Parcel #${parcel.id}</h2>
-          <p class="leading-relaxed text-base">Description: ${parcel.description}</p>
-          <p class="leading-relaxed text-base font-semibold">Status: ${parcel.status}</p>
-          ${parcel.status === "Arrived" ? 
-            `<button onclick="collectParcel(${parcel.id})" 
-              class="mt-3 bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">
-              Collect
-            </button>` 
-            : ""}
-        </div>
-      </div>
-    `;
-    container.appendChild(card);
+  // Cancel ticket
+  document.addEventListener("click", (e) => {
+    if (e.target && e.target.id === "cancelBtn") {
+      if (courierTickets.length === 0) return;
+      const ticket = courierTickets[courierTickets.length - 1];
+      courierTickets.pop();
+      localStorage.setItem("courierTickets", JSON.stringify(courierTickets));
+
+      alert(`Courier ticket for ${ticket.name} cancelled. Refund of KES ${ticket.price} will be processed.`);
+      ticketDiv.classList.add("hidden");
+    }
   });
-}
 
-// Handle collect
-function collectParcel(id) {
-  parcels = parcels.filter(parcel => parcel.id !== id);
-  renderParcels();
-  alert("Parcel collected successfully!");
-}
-
-// Initial render
-document.addEventListener("DOMContentLoaded", renderParcels);
+  function showTicket(ticket) {
+    ticketDiv.classList.remove("hidden");
+    document.getElementById("ticketDetails").innerHTML = `
+      ✅ Payment Successful!<br>
+      Name: ${ticket.name}<br>
+      Email: ${ticket.email}<br>
+      Phone: ${ticket.phone}<br>
+      Pickup: ${ticket.pickupStation}<br>
+      Drop-off: ${ticket.dropoffStation}<br>
+      Parcels: ${ticket.parcelCount}<br>
+      Weight: ${ticket.weight} kg<br>
+      Pickup Date: ${ticket.pickupDate}<br>
+      Pickup Time: ${ticket.pickupTime}<br>
+      Description: ${ticket.description}<br>
+      Price: KES ${ticket.price}
+    `;
+  }
+});
 

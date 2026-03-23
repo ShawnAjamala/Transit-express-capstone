@@ -1,68 +1,82 @@
-
-
 document.addEventListener("DOMContentLoaded", () => {
-  // Reset localStorage completely on page load
-  localStorage.clear();
-
-  const seatGrid = document.getElementById("seatGrid");
+  const bookingForm = document.getElementById("bookingForm");
   const routeSelect = document.getElementById("route");
-  let bookingData = {};
+  const seatGrid = document.getElementById("seatGrid");
+  let selectedSeat = null;
 
-  // Render seats for selected route
-  function renderSeats(route) {
+  function renderSeats() {
     seatGrid.innerHTML = "";
-    if (!route) return; // don’t render until a route is chosen
+    const totalSeats = 20;
+    const routeOption = routeSelect.options[routeSelect.selectedIndex];
+    const route = routeOption?.value || "";
+    const day = document.getElementById("day").value;
+    const seatKey = route && day ? `bookedSeats_${route}_${day}` : null;
+    const reservedSeats = seatKey ? JSON.parse(localStorage.getItem(seatKey)) || [] : [];
 
-    let routeSeats = JSON.parse(localStorage.getItem("bookedSeats_" + route)) || [];
-
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= totalSeats; i++) {
       const seat = document.createElement("div");
-      seat.textContent = "Seat " + i;
-      seat.className = "border p-4 text-center cursor-pointer hover:bg-orange-200";
+      seat.textContent = i;
+      seat.dataset.seatNumber = i;
+      seat.className = "border rounded p-4 text-center transition cursor-pointer";
 
-      if (routeSeats.includes(i)) {
-        seat.classList.add("bg-gray-400", "cursor-not-allowed");
+      if (reservedSeats.includes(String(i))) {
+        seat.classList.add("bg-gray-400", "text-white", "cursor-not-allowed");
       } else {
-        seat.onclick = () => {
-          document.querySelectorAll("#seatGrid div").forEach(s => s.classList.remove("bg-orange-400"));
-          seat.classList.add("bg-orange-400");
-          bookingData.seat = i;
-        };
+        seat.classList.add("hover:bg-blue-100");
+        seat.addEventListener("click", () => selectSeat(seat));
       }
       seatGrid.appendChild(seat);
     }
   }
 
-  // Show seats when route changes
-  routeSelect.addEventListener("change", () => {
-    renderSeats(routeSelect.value);
-  });
+  function selectSeat(seat) {
+    document.querySelectorAll("#seatGrid div").forEach((s) => {
+      s.classList.remove("bg-blue-500", "text-white");
+    });
+    seat.classList.add("bg-blue-500", "text-white");
+    selectedSeat = seat.dataset.seatNumber;
+  }
 
-  document.getElementById("confirmSeat").onclick = (e) => {
+  routeSelect.addEventListener("change", renderSeats);
+  document.getElementById("day").addEventListener("change", renderSeats);
+
+  bookingForm.addEventListener("submit", (e) => {
     e.preventDefault();
-
-    const name = document.getElementById("name").value;
-    const route = routeSelect.value;
-    const price = routeSelect.options[routeSelect.selectedIndex].dataset.price;
+    const name = document.getElementById("name").value.trim();
+    const routeOption = routeSelect.options[routeSelect.selectedIndex];
+    const route = routeOption.value;
+    const price = routeOption.dataset.price;
+    const departureTime = routeOption.dataset.time; // e.g. "6:00 AM"
     const day = document.getElementById("day").value;
-    const time = document.getElementById("time").value;
 
-    if (!name || !route || !day || !time || !bookingData.seat) {
-      alert("Please fill all fields and select a seat!");
+    if (!selectedSeat) {
+      alert("Please select a seat before proceeding.");
       return;
     }
 
-    // Save booking data
-    localStorage.setItem("bookingData", JSON.stringify({ name, route, day, time, seat: bookingData.seat, price }));
+    // ✅ Departure time check
+    const departureDateTime = new Date(`${day} ${departureTime}`);
+    const now = new Date();
+    if (now > departureDateTime) {
+      alert("⚠️ Sorry, this departure time has already passed. Please choose another route or day.");
+      return;
+    }
 
-    // Save booked seat for that route
-    let routeSeats = JSON.parse(localStorage.getItem("bookedSeats_" + route)) || [];
-    routeSeats.push(bookingData.seat);
-    localStorage.setItem("bookedSeats_" + route, JSON.stringify(routeSeats));
+    const bookingData = { name, route, price, day, time: departureTime, seat: selectedSeat };
 
-    // Redirect to payment page
+    const seatKey = `bookedSeats_${route}_${day}`;
+    let routeSeats = JSON.parse(localStorage.getItem(seatKey)) || [];
+    if (routeSeats.includes(selectedSeat)) {
+      alert("This seat is already reserved. Please choose another.");
+      return;
+    }
+    routeSeats.push(selectedSeat);
+    localStorage.setItem(seatKey, JSON.stringify(routeSeats));
+
+    localStorage.setItem("bookingData", JSON.stringify(bookingData));
     window.location.href = "payseat.html";
-  };
-});
+  });
 
+  renderSeats();
+});
 

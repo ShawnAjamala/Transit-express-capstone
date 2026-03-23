@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Seat Pay</title>
+    <title>View Tickets</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="payseat.js" defer></script>
+    <script src="viewtickets.js" defer></script>
   </head>
   <body class="bg-gray-100 text-black">
+    <!-- Navbar -->
     <header class="fixed top-0 left-0 w-full bg-gray-100 shadow-md z-50">
       <div
         class="container mx-auto flex flex-wrap p-5 items-center justify-between"
@@ -45,58 +46,23 @@
             class="text-orange-500 hover:text-blue-600 font-medium"
             >View Tickets</a
           >
-          <!-- New Login Button -->
           <a
             href="login.html"
             class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium"
+            >Login</a
           >
-            Login
-          </a>
         </nav>
       </div>
     </header>
 
-    <div class="container mx-auto px-5 pt-28 pb-20 text-center">
-      <h2 class="text-2xl font-bold text-orange-500 mb-6">Payment</h2>
-      <div id="paymentDetails" class="mb-6"></div>
-      <button
-        id="payBtn"
-        class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 font-semibold"
-      >
-        Pay Now
-      </button>
-      <button
-        onclick="window.location.href = 'booking.html'"
-        class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 font-semibold mt-4"
-      >
-        ← Go Back
-      </button>
-
-      <div
-        id="ticket"
-        class="hidden mt-6 border p-6 rounded bg-gray-100 text-left"
-      >
-        <h3 class="text-xl font-bold text-blue-600 mb-4">🎟 Your Ticket</h3>
-        <p id="ticketDetails"></p>
-        <button
-          id="cancelBtn"
-          class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 font-semibold mt-4"
-        >
-          Cancel Ticket
-        </button>
-      </div>
-
-      <div
-        id="cancelMessage"
-        class="hidden mt-6 border p-6 rounded bg-red-100 text-left"
-      >
-        <h3 class="text-xl font-bold text-red-600 mb-4">❌ Ticket Cancelled</h3>
-        <p id="cancelDetails"></p>
-      </div>
+    <!-- Tickets Section -->
+    <div class="container mx-auto px-5 pt-28 pb-20">
+      <h2 class="text-2xl font-bold text-orange-500 mb-6">🎟 Your Tickets</h2>
+      <div id="ticketsContainer" class="space-y-6"></div>
     </div>
   </body>
-
-<footer class="bg-orange-500 text-white body-font">
+  <!-- Footer -->
+  <footer class="bg-orange-500 text-white body-font mt-20">
     <div class="container px-5 py-8 mx-auto flex flex-wrap justify-between">
       <!-- Brand -->
       <div class="w-full sm:w-1/4 mb-6 sm:mb-0">
@@ -139,23 +105,20 @@
             href="https://facebook.com"
             target="_blank"
             class="hover:text-blue-200"
-          >
-            <i class="fab fa-facebook"></i>
-          </a>
+            ><i class="fab fa-facebook"></i
+          ></a>
           <a
             href="https://instagram.com"
             target="_blank"
             class="hover:text-pink-200"
-          >
-            <i class="fab fa-instagram"></i>
-          </a>
+            ><i class="fab fa-instagram"></i
+          ></a>
           <a
             href="https://linkedin.com"
             target="_blank"
             class="hover:text-blue-300"
-          >
-            <i class="fab fa-linkedin"></i>
-          </a>
+            ><i class="fab fa-linkedin"></i
+          ></a>
         </div>
       </div>
     </div>
@@ -165,6 +128,4 @@
       <p class="text-sm">© 2026 Transit Express. All rights reserved.</p>
     </div>
   </footer>
-
-
 </html>
