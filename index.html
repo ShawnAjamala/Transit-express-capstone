@@ -3,29 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
+    <title>Transit Express</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <!-- nav bar -->
+    <!-- Navigation -->
     <header class="fixed top-0 left-0 w-full bg-gray-100 shadow-md z-50">
       <div
         class="container mx-auto flex flex-wrap p-5 items-center justify-between"
       >
-        <!-- Brand -->
         <a
           class="flex title-font font-bold items-center text-orange-500 text-2xl"
+          >Transit Express</a
         >
-          Transit Express
-        </a>
-
-        <!-- Hamburger Toggle (Mobile Only) -->
         <input type="checkbox" id="menu-toggle" class="hidden peer" />
         <label
           for="menu-toggle"
           class="md:hidden cursor-pointer text-orange-500"
         >
-          <!-- Hamburger Icon -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-8 w-8"
@@ -41,8 +36,6 @@
             />
           </svg>
         </label>
-
-        <!-- Navigation -->
         <nav
           class="hidden peer-checked:flex md:flex flex-col md:flex-row md:items-center md:space-x-6 bg-gray-100 md:bg-transparent w-full md:w-auto mt-4 md:mt-0 p-4 md:p-0"
         >
@@ -75,14 +68,13 @@
       </div>
     </header>
 
-    <!-- hero section -->
-    <section class="bg-white text-gray-600 body-font">
+    <!-- Hero Section -->
+    <section class="bg-white text-gray-600 body-font pt-32 pb-12">
       <div
-        class="container mx-auto flex px-5 py-40 md:flex-row flex-col items-center"
+        class="container mx-auto flex px-5 md:flex-row flex-col items-center"
       >
-        <!-- Left Content -->
         <div
-          class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 ml-5 md:mb-0 items-center text-center"
+          class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-8 ml-5 md:mb-0 items-center text-center"
         >
           <h1
             class="title-font sm:text-4xl text-3xl mb-4 font-bold text-orange-500"
@@ -90,10 +82,10 @@
             Travel Smarter with Transit Express
             <br class="hidden lg:inline-block" />Your Route, Your Bus, Your Time
           </h1>
-          <p class="mb-8 leading-relaxed text-black">
+          <p class="mb-6 leading-relaxed text-black">
             Track buses in real-time, explore available routes, and book your
             ride with ease. Whether you’re commuting daily or booking an entire
-            bus for your group, Transit express makes travel simple and
+            bus for your group, Transit Express makes travel simple and
             reliable.
           </p>
           <div class="flex justify-center">
@@ -109,8 +101,6 @@
             </button>
           </div>
         </div>
-
-        <!-- Right Image -->
         <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
           <img
             class="object-cover object-center rounded shadow-lg max-h-50"
@@ -121,11 +111,11 @@
       </div>
     </section>
 
-    <section class="pt-10 lg:pt-[120px] pb-10 lg:pb-10 bg-white py-12">
+    <!-- Why Choose Us -->
+    <section class="pt-4 pb-8 bg-white">
       <div class="container mx-auto">
-        <!-- Section Title -->
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold text-orange-500 mb-4">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl md:text-4xl font-bold text-orange-500 mb-2">
             Why Choose Transit Express
           </h2>
           <p class="text-gray-600 max-w-2xl mx-auto">
@@ -134,7 +124,6 @@
           </p>
         </div>
 
-        <!-- Cards -->
         <div class="flex flex-wrap -mx-4 ml-5 mr-5">
           <!-- Card 1 -->
           <div class="w-full md:w-1/2 xl:w-1/3 px-4 mb-8">
@@ -143,7 +132,7 @@
             >
               <img
                 src="images/tracking.jpg"
-                alt="Bus Tracking Illustration"
+                alt="Bus Tracking"
                 class="w-full h-48 object-cover"
               />
               <div class="p-6 text-center">
@@ -157,9 +146,8 @@
                 <a
                   href="#"
                   class="inline-block py-2 px-6 border border-gray-300 rounded-full text-base text-gray-700 font-medium hover:bg-blue-500 hover:text-white transition"
+                  >Learn More</a
                 >
-                  Learn More
-                </a>
               </div>
             </div>
           </div>
@@ -171,7 +159,7 @@
             >
               <img
                 src="images/map.webp"
-                alt="Routes Map Illustration"
+                alt="Routes Map"
                 class="w-full h-48 object-cover"
               />
               <div class="p-6 text-center">
@@ -185,9 +173,8 @@
                 <a
                   href="#"
                   class="inline-block py-2 px-6 border border-gray-300 rounded-full text-base text-gray-700 font-medium hover:bg-blue-500 hover:text-white transition"
+                  >Learn More</a
                 >
-                  Learn More
-                </a>
               </div>
             </div>
           </div>
@@ -199,7 +186,7 @@
             >
               <img
                 src="images/book.jpg"
-                alt="Bus Booking App Illustration"
+                alt="Bus Booking App"
                 class="w-full h-48 object-cover"
               />
               <div class="p-6 text-center">
@@ -213,9 +200,8 @@
                 <a
                   href="#"
                   class="inline-block py-2 px-6 border border-gray-300 rounded-full text-base text-gray-700 font-medium hover:bg-blue-500 hover:text-white transition"
+                  >Learn More</a
                 >
-                  Learn More
-                </a>
               </div>
             </div>
           </div>
@@ -224,95 +210,72 @@
     </section>
   </body>
   <footer class="bg-orange-500 text-white body-font">
-    <div
-      class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col"
-    >
+    <div class="container px-5 py-8 mx-auto flex flex-wrap justify-between">
       <!-- Brand -->
-      <a
-        class="flex title-font font-bold items-center md:justify-start justify-center"
-      >
-        Transit Express
-      </a>
+      <div class="w-full sm:w-1/4 mb-6 sm:mb-0">
+        <h2 class="font-bold text-lg">Transit Express</h2>
+        <p class="text-sm">Your trusted transport & courier partner.</p>
+      </div>
 
-      <!-- Copyright -->
-      <p
-        class="text-sm sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-white sm:py-2 sm:mt-0 mt-4"
-      >
-        © 2026 Transit Express
-      </p>
+      <!-- Quick Links -->
+      <div class="w-full sm:w-1/4 mb-6 sm:mb-0">
+        <h2 class="font-bold text-lg mb-2">Quick Links</h2>
+        <ul class="space-y-2 text-sm">
+          <li><a href="routes.html" class="hover:text-blue-200">Routes</a></li>
+          <li>
+            <a href="booking.html" class="hover:text-blue-200">Book Tickets</a>
+          </li>
+          <li>
+            <a href="courier.html" class="hover:text-blue-200"
+              >Courier Services</a
+            >
+          </li>
+          <li><a href="login.html" class="hover:text-blue-200">Login</a></li>
+        </ul>
+      </div>
 
-      <!-- Contact Info -->
-      <p
-        class="text-sm sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-white sm:py-2 sm:mt-0 mt-4"
-      >
-        Contact:
-        <a
-          href="mailto:shawnajamala1@gmail.com"
-          class="underline hover:text-blue-200"
-          >shawnajamala1@gmail.com</a
-        >
-
-        Phone number:012345678
-      </p>
-
-      <!-- Social Icons -->
-      <span
-        class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start"
-      >
-        <!-- Facebook -->
-        <a
-          href="https://facebook.com"
-          target="_blank"
-          class="ml-3 hover:text-blue-200"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            class="w-6 h-6"
-            viewBox="0 0 24 24"
+      <!-- Contact & Social -->
+      <div class="w-full sm:w-1/4">
+        <h2 class="font-bold text-lg mb-2">Contact</h2>
+        <p class="text-sm">
+          Email:
+          <a
+            href="mailto:shawnajamala1@gmail.com"
+            class="underline hover:text-blue-200"
           >
-            <path
-              d="M22 12c0-5.522-4.477-10-10-10S2 6.478 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.988H7.898v-2.89h2.54V9.797c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562v1.875h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-            />
-          </svg>
-        </a>
-
-        <!-- Instagram -->
-        <a
-          href="https://instagram.com"
-          target="_blank"
-          class="ml-3 hover:text-pink-200"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            class="w-6 h-6"
-            viewBox="0 0 24 24"
+            shawnajamala1@gmail.com </a
+          ><br />
+          Phone: 012345678
+        </p>
+        <div class="flex mt-3 space-x-4 text-lg">
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            class="hover:text-blue-200"
           >
-            <path
-              d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-2a1.5 1.5 0 11-3.001-.001A1.5 1.5 0 0116.5 5z"
-            />
-          </svg>
-        </a>
-
-        <!-- LinkedIn -->
-        <a
-          href="https://linkedin.com"
-          target="_blank"
-          class="ml-3 hover:text-blue-300"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            class="w-6 h-6"
-            viewBox="0 0 24 24"
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            class="hover:text-pink-200"
           >
-            <path
-              d="M19 0h-14C2.243 0 0 2.243 0 5v14c0 2.757 2.243 5 5 5h14c2.757 0 5-2.243 5-5V5c0-2.757-2.243-5-5-5zM8.339 18.339H5.661V9.661h2.678v8.678zM7 8.339a1.339 1.339 0 110-2.678 1.339 1.339 0 010 2.678zm11.339 10h-2.678v-4.339c0-1.035-.304-1.75-1.339-1.75-.75 0-1.339.5-1.339 1.75v4.339h-2.678V9.661h2.678v1.25c.5-.75 1.339-1.25 2.678-1.25 1.75 0 2.678 1.25 2.678 3.339v5.339z"
-            />
-          </svg>
-        </a>
-      </span>
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            class="hover:text-blue-300"
+          >
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="bg-orange-600 text-center py-4 mt-6">
+      <p class="text-sm">© 2026 Transit Express. All rights reserved.</p>
     </div>
   </footer>
 </html>
