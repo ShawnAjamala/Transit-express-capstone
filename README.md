@@ -15,7 +15,7 @@ A responsive web application for booking transport seats and courier services ac
 - `paycourier.html`
 - `sign.html`
 - `routes.html`
-
+- `viewtickets.html`
 ---
 
 ##  Login Page
@@ -27,7 +27,7 @@ A responsive web application for booking transport seats and courier services ac
 
 ---
 
-## 📦 Courier Booking
+## Courier Booking
 
 - Weight-based pricing
 - Surcharge for parcels over 30kg
@@ -68,8 +68,8 @@ A responsive web application for booking transport seats and courier services ac
 ---
 
 ##  Live URL
-(https://your-live-url-here.com)
+https://shawnajamala.github.io/Transit-express-capstone/
 ---
 
 ##  GitHub Repository
-[GitHub Repo](https://github.com/your-username/transit-express)
+https://github.com/ShawnAjamala/Transit-express-capstone/tree/main
