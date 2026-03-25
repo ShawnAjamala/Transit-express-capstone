@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Courier Payment</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="paycourier.js" defer></script>
   </head>
   <body class="bg-gray-100 text-black">
  
-<!-- Navigation -->
+<!-- nav bar -->
 <header class="fixed top-0 left-0 w-full bg-gray-100 shadow-md z-50">
   <div class="container mx-auto flex flex-wrap p-5 items-center justify-between">
     <!-- Brand -->
@@ -16,39 +17,38 @@
       Transit Express
     </a>
 
-    <!-- Hamburger (checkbox hack with peer) -->
+    <!-- Mobile Menu -->
     <div class="md:hidden">
       <input type="checkbox" id="menu-toggle" class="hidden peer" />
       <label for="menu-toggle" class="cursor-pointer text-orange-500">
-        <!-- Hamburger icon -->
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </label>
-
-      <!-- Mobile Menu -->
-      <nav class="hidden peer-checked:flex flex-col space-y-4 mt-4 bg-gray-100 p-4 rounded shadow-md">
+      <nav id="mobileMenu" class="hidden peer-checked:flex flex-col space-y-4 mt-4 bg-gray-100 p-4 rounded shadow-md">
         <a href="index.html" class="text-orange-500 hover:text-blue-600 font-medium">Home</a>
         <a href="routes.html" class="text-orange-500 hover:text-blue-600 font-medium">Routes</a>
         <a href="courier.html" class="text-orange-500 hover:text-blue-600 font-medium">Courier Services</a>
         <a href="booking.html" class="text-orange-500 hover:text-blue-600 font-medium">Booking</a>
         <a href="viewtickets.html" class="text-orange-500 hover:text-blue-600 font-medium">View Tickets</a>
-        <a href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium">
-          Login
+        <!-- Dynamic link -->
+        <a id="navActionMobile" href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium">
+          Login / Sign Up
         </a>
       </nav>
     </div>
 
     <!-- Desktop Menu -->
-    <nav class="hidden md:flex md:flex-row md:items-center md:space-x-6">
+    <nav id="desktopMenu" class="hidden md:flex md:flex-row md:items-center md:space-x-6">
       <a href="index.html" class="text-orange-500 hover:text-blue-600 font-medium">Home</a>
       <a href="routes.html" class="text-orange-500 hover:text-blue-600 font-medium">Routes</a>
       <a href="courier.html" class="text-orange-500 hover:text-blue-600 font-medium">Courier Services</a>
       <a href="booking.html" class="text-orange-500 hover:text-blue-600 font-medium">Booking</a>
       <a href="viewtickets.html" class="text-orange-500 hover:text-blue-600 font-medium">View Tickets</a>
-      <a href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium">
-        Login
+      <!-- Dynamic link -->
+      <a id="navActionDesktop" href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium">
+        Login / Sign Up
       </a>
     </nav>
   </div>
@@ -100,99 +100,30 @@
       </div>
     </div>
 
-    <!-- Inline JS -->
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        let courierTickets =
-          JSON.parse(localStorage.getItem("courierTickets")) || [];
-        const paymentDetails = document.getElementById("paymentDetails");
+  <!-- Inline nav bar script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const navActionDesktop = document.getElementById("navActionDesktop");
+    const navActionMobile = document.getElementById("navActionMobile");
 
-        if (courierTickets.length > 0) {
-          const ticket = courierTickets[courierTickets.length - 1];
-          paymentDetails.innerHTML = `
-          <p><strong>Name:</strong> ${ticket.name}</p>
-          <p><strong>Email:</strong> ${ticket.email}</p>
-          <p><strong>Phone:</strong> ${ticket.phone}</p>
-          <p><strong>Pickup:</strong> ${ticket.pickupStation}</p>
-          <p><strong>Drop-off:</strong> ${ticket.dropoffStation}</p>
-          <p><strong>Parcels:</strong> ${ticket.parcelCount}</p>
-          <p><strong>Weight:</strong> ${ticket.weight} kg</p>
-          <p><strong>Date:</strong> ${ticket.pickupDate}</p>
-          <p><strong>Time:</strong> ${ticket.pickupTime}</p>
-          <p><strong>Description:</strong> ${ticket.description}</p>
-          <p><strong>Price:</strong> KES ${ticket.price}</p>
-        `;
-        } else {
-          paymentDetails.innerHTML = "<p>No courier booking found.</p>";
-        }
+    const currentUser = localStorage.getItem("currentUser");
+    const accounts = JSON.parse(localStorage.getItem("accounts")) || {};
 
-        // Pay Now
-        document.getElementById("payBtn").onclick = () => {
-          if (courierTickets.length === 0) return;
-          const ticket = courierTickets[courierTickets.length - 1];
-
-          // ✅ Robust check if pickup date/time has passed
-          const [year, month, day] = ticket.pickupDate.split("-").map(Number);
-          const [hours, minutes] = ticket.pickupTime.split(":").map(Number);
-          const departureDateTime = new Date(
-            year,
-            month - 1,
-            day,
-            hours,
-            minutes,
-          );
-          const now = new Date();
-
-          if (now > departureDateTime) {
-            alert(
-              "⚠️ Sorry, this pickup time has already passed. Please book again with a valid future time.",
-            );
-            return; // stop here, do not book
-          }
-
-          // Only runs if the time is valid
-          setTimeout(() => {
-            showTicket(ticket);
-          }, 1000);
-        };
-
-        // Cancel Ticket
-        document.getElementById("cancelBtn").onclick = () => {
-          if (courierTickets.length === 0) return;
-          const ticket = courierTickets[courierTickets.length - 1];
-          courierTickets.pop();
-          localStorage.setItem(
-            "courierTickets",
-            JSON.stringify(courierTickets),
-          );
-
-          document.getElementById("cancelMessage").classList.remove("hidden");
-          document.getElementById("cancelDetails").innerHTML = `
-          Courier ticket for <strong>${ticket.name}</strong> has been cancelled.<br>
-          Refund of KES ${ticket.price} will be processed.
-        `;
-          document.getElementById("ticket").classList.add("hidden");
-        };
-
-        function showTicket(ticket) {
-          document.getElementById("ticket").classList.remove("hidden");
-          document.getElementById("ticketDetails").innerHTML = `
-          ✅ Payment Successful!<br>
-          Name: ${ticket.name}<br>
-          Email: ${ticket.email}<br>
-          Phone: ${ticket.phone}<br>
-          Pickup: ${ticket.pickupStation}<br>
-          Drop-off: ${ticket.dropoffStation}<br>
-          Parcels: ${ticket.parcelCount}<br>
-          Weight: ${ticket.weight} kg<br>
-          Date: ${ticket.pickupDate}<br>
-          Time: ${ticket.pickupTime}<br>
-          Description: ${ticket.description}<br>
-          Price: KES ${ticket.price}
-        `;
-        }
-      });
-    </script>
+    if (currentUser && accounts[currentUser]) {
+      // Logged in → show Account
+      navActionDesktop.textContent = "Account";
+      navActionDesktop.href = "account.html";
+      navActionMobile.textContent = "Account";
+      navActionMobile.href = "account.html";
+    } else {
+      // Not logged in → show Login / Sign Up
+      navActionDesktop.textContent = "Login / Sign Up";
+      navActionDesktop.href = "login.html";
+      navActionMobile.textContent = "Login / Sign Up";
+      navActionMobile.href = "login.html";
+    }
+  });
+</script>
   </body>
   <footer class="bg-orange-500 text-white body-font">
     <div class="container px-5 py-8 mx-auto flex flex-wrap justify-between">

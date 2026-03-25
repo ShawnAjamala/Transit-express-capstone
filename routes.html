@@ -7,7 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-white text-black">
-  <!-- Navigation -->
+    
+<!-- nav bar -->
 <header class="fixed top-0 left-0 w-full bg-gray-100 shadow-md z-50">
   <div class="container mx-auto flex flex-wrap p-5 items-center justify-between">
     <!-- Brand -->
@@ -15,259 +16,254 @@
       Transit Express
     </a>
 
-    <!-- Hamburger (checkbox hack with peer) -->
+    <!-- Mobile Menu -->
     <div class="md:hidden">
       <input type="checkbox" id="menu-toggle" class="hidden peer" />
       <label for="menu-toggle" class="cursor-pointer text-orange-500">
-        <!-- Hamburger icon -->
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </label>
-
-      <!-- Mobile Menu -->
-      <nav class="hidden peer-checked:flex flex-col space-y-4 mt-4 bg-gray-100 p-4 rounded shadow-md">
+      <nav id="mobileMenu" class="hidden peer-checked:flex flex-col space-y-4 mt-4 bg-gray-100 p-4 rounded shadow-md">
         <a href="index.html" class="text-orange-500 hover:text-blue-600 font-medium">Home</a>
         <a href="routes.html" class="text-orange-500 hover:text-blue-600 font-medium">Routes</a>
         <a href="courier.html" class="text-orange-500 hover:text-blue-600 font-medium">Courier Services</a>
         <a href="booking.html" class="text-orange-500 hover:text-blue-600 font-medium">Booking</a>
         <a href="viewtickets.html" class="text-orange-500 hover:text-blue-600 font-medium">View Tickets</a>
-        <a href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium">
-          Login
+        <!-- Dynamic link -->
+        <a id="navActionMobile" href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium">
+          Login / Sign Up
         </a>
       </nav>
     </div>
 
     <!-- Desktop Menu -->
-    <nav class="hidden md:flex md:flex-row md:items-center md:space-x-6">
+    <nav id="desktopMenu" class="hidden md:flex md:flex-row md:items-center md:space-x-6">
       <a href="index.html" class="text-orange-500 hover:text-blue-600 font-medium">Home</a>
       <a href="routes.html" class="text-orange-500 hover:text-blue-600 font-medium">Routes</a>
       <a href="courier.html" class="text-orange-500 hover:text-blue-600 font-medium">Courier Services</a>
       <a href="booking.html" class="text-orange-500 hover:text-blue-600 font-medium">Booking</a>
       <a href="viewtickets.html" class="text-orange-500 hover:text-blue-600 font-medium">View Tickets</a>
-      <a href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium">
-        Login
+      <!-- Dynamic link -->
+      <a id="navActionDesktop" href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium">
+        Login / Sign Up
       </a>
     </nav>
   </div>
 </header>
 
-
-
-
-<!-- Content -->
-<section class="body-font">
-  <!-- Heading + Text -->
-  <div class="flex flex-col md:flex-row mx-auto px-5 pt-32 pb-30 gap-8 max-w-6xl">
-    <!-- Left: Heading -->
-    <div class="md:w-1/2 flex items-center">
-      <h2
-        class="text-3xl md:text-4xl font-bold text-orange-500 mb-6 underline underline-offset-4"
+    <!-- Content -->
+    <section class="body-font">
+      <!-- Heading + Text -->
+      <div
+        class="flex flex-col md:flex-row mx-auto px-5 pt-32 pb-30 gap-8 max-w-6xl"
       >
-        Our Routes
-      </h2>
-    </div>
+        <!-- Left: Heading -->
+        <div class="md:w-1/2 flex items-center">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-orange-500 mb-6 underline underline-offset-4"
+          >
+            Our Routes
+          </h2>
+        </div>
 
-    <!-- Right: Text -->
-    <div class="md:w-1/2 flex items-center">
-      <p class="max-w-2xl mb-8">
-        Transit Express offers reliable day and night routes across the city
-        and beyond. Choose your preferred time and book your ride with ease.
-      </p>
-    </div>
-  </div>
+        <!-- Right: Text -->
+        <div class="md:w-1/2 flex items-center">
+          <p class="max-w-2xl mb-8">
+            Transit Express offers reliable day and night routes across the city
+            and beyond. Choose your preferred time and book your ride with ease.
+          </p>
+        </div>
+      </div>
 
-  <!-- Filter Dropdown -->
-  <div class="flex justify-center mb-8">
-    <select
-      id="routeFilter"
-      class="border border-gray-300 rounded px-4 py-2 text-black"
-    >
-      <option value="all">All Routes</option>
-      <option value="day">Day Routes</option>
-      <option value="night">Night Routes</option>
-    </select>
-  </div>
+      <!-- Filter Dropdown -->
+      <div class="flex justify-center mb-8">
+        <select
+          id="routeFilter"
+          class="border border-gray-300 rounded px-4 py-2 text-black"
+        >
+          <option value="all">All Routes</option>
+          <option value="day">Day Routes</option>
+          <option value="night">Night Routes</option>
+        </select>
+      </div>
 
-  <!-- Routes Grid -->
-  <div class="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto px-5" id="routesGrid">
-    <!-- Route 1 -->
-    <div
-      class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
-      data-type="day"
-    >
-      <h3 class="text-xl font-semibold text-orange-500 mb-2">
-        Route 1: CBD → Westlands
-      </h3>
-      <p class="mb-2">Day Service • 6:00 AM</p>
-      <p class="text-sm mb-2">Days: Mon–Fri</p>
-      <p class="text-sm mb-4">Passes through: Museum Hill, Parklands</p>
-      <a
-        href="booking.html"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
-        >Book Now</a
+      <!-- Routes Grid -->
+      <div
+        class="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto px-5"
+        id="routesGrid"
       >
-    </div>
+        <!-- Route 1 -->
+        <div
+          class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
+          data-type="day"
+        >
+          <h3 class="text-xl font-semibold text-orange-500 mb-2">
+            Route 1: CBD → Westlands
+          </h3>
+          <p class="mb-2">Day Service • 6:00 AM</p>
+          <p class="text-sm mb-2">Days: Mon–Fri</p>
+          <p class="text-sm mb-4">Passes through: Museum Hill, Parklands</p>
+          <a
+            href="booking.html"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
+            >Book Now</a
+          >
+        </div>
 
-    <!-- Route 2 -->
-    <div
-      class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
-      data-type="night"
-    >
-      <h3 class="text-xl font-semibold text-orange-500 mb-2">
-        Route 2: CBD → JKIA
-      </h3>
-      <p class="mb-2">Night Service • 7:00 PM</p>
-      <p class="text-sm mb-2">Days: Daily</p>
-      <p class="text-sm mb-4">Passes through: Mombasa Road, South B</p>
-      <a
-        href="booking.html"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
-        >Book Now</a
-      >
-    </div>
+        <!-- Route 2 -->
+        <div
+          class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
+          data-type="night"
+        >
+          <h3 class="text-xl font-semibold text-orange-500 mb-2">
+            Route 2: CBD → JKIA
+          </h3>
+          <p class="mb-2">Night Service • 7:00 PM</p>
+          <p class="text-sm mb-2">Days: Daily</p>
+          <p class="text-sm mb-4">Passes through: Mombasa Road, South B</p>
+          <a
+            href="booking.html"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
+            >Book Now</a
+          >
+        </div>
 
-    <!-- Route 3 -->
-    <div
-      class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
-      data-type="day"
-    >
-      <h3 class="text-xl font-semibold text-orange-500 mb-2">
-        Route 3: CBD → Thika
-      </h3>
-      <p class="mb-2">Day Service • 5:30AM</p>
-      <p class="text-sm mb-2">Days: Mon–Sat</p>
-      <p class="text-sm mb-4">Passes through: Pangani, Githurai</p>
-      <a
-        href="booking.html"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
-        >Book Now</a
-      >
-    </div>
+        <!-- Route 3 -->
+        <div
+          class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
+          data-type="day"
+        >
+          <h3 class="text-xl font-semibold text-orange-500 mb-2">
+            Route 3: CBD → Thika
+          </h3>
+          <p class="mb-2">Day Service • 5:30AM</p>
+          <p class="text-sm mb-2">Days: Mon–Sat</p>
+          <p class="text-sm mb-4">Passes through: Pangani, Githurai</p>
+          <a
+            href="booking.html"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
+            >Book Now</a
+          >
+        </div>
 
-    <!-- Route 4 -->
-    <div
-      class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
-      data-type="night"
-    >
-      <h3 class="text-xl font-semibold text-orange-500 mb-2">
-        Route 4: CBD → Rongai
-      </h3>
-      <p class="mb-2">Night Service • 8:00 PM</p>
-      <p class="text-sm mb-2">Days: Daily</p>
-      <p class="text-sm mb-4">Passes through: Kenyatta, Lang’ata</p>
-      <a
-        href="booking.html"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
-        >Book Now</a
-      >
-    </div>
+        <!-- Route 4 -->
+        <div
+          class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
+          data-type="night"
+        >
+          <h3 class="text-xl font-semibold text-orange-500 mb-2">
+            Route 4: CBD → Rongai
+          </h3>
+          <p class="mb-2">Night Service • 8:00 PM</p>
+          <p class="text-sm mb-2">Days: Daily</p>
+          <p class="text-sm mb-4">Passes through: Kenyatta, Lang’ata</p>
+          <a
+            href="booking.html"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
+            >Book Now</a
+          >
+        </div>
 
-    <!-- Route 5 -->
-    <div
-      class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
-      data-type="day"
-    >
-      <h3 class="text-xl font-semibold text-orange-500 mb-2">
-        Route 5: CBD → Karen
-      </h3>
-      <p class="mb-2">Day Service • 6:00 AM</p>
-      <p class="text-sm mb-2">Days: Mon–Fri</p>
-      <p class="text-sm mb-4">Passes through: Ngong Road, Dagoretti</p>
-      <a
-        href="booking.html"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
-        >Book Now</a
-      >
-    </div>
+        <!-- Route 5 -->
+        <div
+          class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
+          data-type="day"
+        >
+          <h3 class="text-xl font-semibold text-orange-500 mb-2">
+            Route 5: CBD → Karen
+          </h3>
+          <p class="mb-2">Day Service • 6:00 AM</p>
+          <p class="text-sm mb-2">Days: Mon–Fri</p>
+          <p class="text-sm mb-4">Passes through: Ngong Road, Dagoretti</p>
+          <a
+            href="booking.html"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
+            >Book Now</a
+          >
+        </div>
 
-    <!-- Route 6 -->
-    <div
-      class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
-      data-type="night"
-    >
-      <h3 class="text-xl font-semibold text-orange-500 mb-2">
-        Route 6: CBD → Kitengela
-      </h3>
-      <p class="mb-2">Night Service • 7:30 PM</p>
-      <p class="text-sm mb-2">Days: Daily</p>
-      <p class="text-sm mb-4">Passes through: Mlolongo, Athi River</p>
-      <a
-        href="booking.html"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
-        >Book Now</a
-      >
-    </div>
+        <!-- Route 6 -->
+        <div
+          class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
+          data-type="night"
+        >
+          <h3 class="text-xl font-semibold text-orange-500 mb-2">
+            Route 6: CBD → Kitengela
+          </h3>
+          <p class="mb-2">Night Service • 7:30 PM</p>
+          <p class="text-sm mb-2">Days: Daily</p>
+          <p class="text-sm mb-4">Passes through: Mlolongo, Athi River</p>
+          <a
+            href="booking.html"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
+            >Book Now</a
+          >
+        </div>
 
-    <!-- Route 7 -->
-    <div
-      class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
-      data-type="day"
-    >
-      <h3 class="text-xl font-semibold text-orange-500 mb-2">
-        Route 7: CBD → Ngong
-      </h3>
-      <p class="mb-2">Day Service • 6:00 AM</p>
-      <p class="text-sm mb-2">Days: Mon–Sat</p>
-      <p class="text-sm mb-4">Passes through: Karen, Bulbul</p>
-      <a
-        href="booking.html"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
-        >Book Now</a
-      >
-    </div>
+        <!-- Route 7 -->
+        <div
+          class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
+          data-type="day"
+        >
+          <h3 class="text-xl font-semibold text-orange-500 mb-2">
+            Route 7: CBD → Ngong
+          </h3>
+          <p class="mb-2">Day Service • 6:00 AM</p>
+          <p class="text-sm mb-2">Days: Mon–Sat</p>
+          <p class="text-sm mb-4">Passes through: Karen, Bulbul</p>
+          <a
+            href="booking.html"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
+            >Book Now</a
+          >
+        </div>
 
-    <!-- Route 8 -->
-    <div
-      class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
-      data-type="night"
-    >
-      <h3 class="text-xl font-semibold text-orange-500 mb-2">
-        Route 8: CBD → Mombasa Road
-      </h3>
-      <p class="mb-2">Night Service • 9:00 PM</p>
-      <p class="text-sm mb-2">Days: Daily</p>
-      <p class="text-sm mb-4">Passes through: South C, Imara Daima</p>
-      <a
-        href="booking.html"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
-        >Book Now</a
-      >
-    </div>
-  </div>
-</section>
+        <!-- Route 8 -->
+        <div
+          class="route-card bg-gray-50 shadow-md rounded-lg p-6 text-center cursor-pointer transform transition duration-300"
+          data-type="night"
+        >
+          <h3 class="text-xl font-semibold text-orange-500 mb-2">
+            Route 8: CBD → Mombasa Road
+          </h3>
+          <p class="mb-2">Night Service • 9:00 PM</p>
+          <p class="text-sm mb-2">Days: Daily</p>
+          <p class="text-sm mb-4">Passes through: South C, Imara Daima</p>
+          <a
+            href="booking.html"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 font-semibold"
+            >Book Now</a
+          >
+        </div>
+      </div>
+    </section>
+<!-- Inline nav bar script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const navActionDesktop = document.getElementById("navActionDesktop");
+    const navActionMobile = document.getElementById("navActionMobile");
 
+    const currentUser = localStorage.getItem("currentUser");
+    const accounts = JSON.parse(localStorage.getItem("accounts")) || {};
 
-    <script>
-      // Filter routes by type (day/night/all)
-      function filterRoutes() {
-        const type = document.getElementById("routeFilter").value;
-        const cards = document.querySelectorAll(".route-card");
-
-        cards.forEach((card) => {
-          if (type === "all" || card.dataset.type === type) {
-            card.style.display = "block";
-          } else {
-            card.style.display = "none";
-          }
-        });
-      }
-
-      // Attach filter event
-      document
-        .getElementById("routeFilter")
-        .addEventListener("change", filterRoutes);
-
-      // Click effect: cards scale forward when clicked
-      document.querySelectorAll(".route-card").forEach((card) => {
-        card.addEventListener("click", () => {
-          card.classList.toggle("scale-105"); // zoom forward
-          card.classList.toggle("shadow-xl"); // deeper shadow
-        });
-      });
-    </script>
-
+    if (currentUser && accounts[currentUser]) {
+      // Logged in → show Account
+      navActionDesktop.textContent = "Account";
+      navActionDesktop.href = "account.html";
+      navActionMobile.textContent = "Account";
+      navActionMobile.href = "account.html";
+    } else {
+      // Not logged in → show Login / Sign Up
+      navActionDesktop.textContent = "Login / Sign Up";
+      navActionDesktop.href = "login.html";
+      navActionMobile.textContent = "Login / Sign Up";
+      navActionMobile.href = "login.html";
+    }
+  });
+</script>
+  
   </body>
   <footer class="bg-orange-500 text-white body-font">
     <div class="container px-5 py-8 mx-auto flex flex-wrap justify-between">

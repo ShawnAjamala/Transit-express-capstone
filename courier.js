@@ -1,5 +1,3 @@
-
-
 document.addEventListener("DOMContentLoaded", () => {
   const priceOutput = document.getElementById("priceOutput");
   const ticketDiv = document.createElement("div");
@@ -14,11 +12,50 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
   document.querySelector(".bg-gray-100.p-8").appendChild(ticketDiv);
 
-  let courierTickets = JSON.parse(localStorage.getItem("courierTickets")) || [];
+  // Helpers
+  function getAccounts() {
+    return JSON.parse(localStorage.getItem("accounts")) || {};
+  }
 
-  // Show last ticket if exists
-  if (courierTickets.length > 0) {
-    showTicket(courierTickets[courierTickets.length - 1]);
+  function saveAccounts(accounts) {
+    localStorage.setItem("accounts", JSON.stringify(accounts));
+  }
+
+  function getCurrentUser() {
+    return localStorage.getItem("currentUser");
+  }
+
+  // Utility: popup
+  function showPopup(message) {
+    const existingPopup = document.querySelector(".custom-popup");
+    if (existingPopup) existingPopup.remove();
+
+    const popup = document.createElement("div");
+    popup.className =
+      "custom-popup fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50";
+
+    popup.innerHTML = `
+      <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
+        <p class="text-gray-800 font-medium mb-4">${message}</p>
+        <button id="closePopup" 
+          class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+          OK
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    document.getElementById("closePopup").addEventListener("click", () => {
+      popup.remove();
+    });
+  }
+
+  // Show last courier ticket if exists
+  const currentUser = getCurrentUser();
+  const accounts = getAccounts();
+  if (currentUser && accounts[currentUser] && accounts[currentUser].courier?.length > 0) {
+    showTicket(accounts[currentUser].courier[accounts[currentUser].courier.length - 1]);
   }
 
   // Price calculator
@@ -36,6 +73,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Submit booking
   window.submitBooking = function () {
+    const currentUser = getCurrentUser();
+    const accounts = getAccounts();
+
+    if (!currentUser || !accounts[currentUser]) {
+      showPopup("⚠️ You must be logged into an account to book courier services.");
+      return;
+    }
+
     const name = document.getElementById("clientName").value.trim();
     const email = document.getElementById("clientEmail").value.trim();
     const phone = document.getElementById("clientPhone").value.trim();
@@ -48,19 +93,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const pickupTime = document.getElementById("pickupTime").value;
 
     if (!name || !email || !phone || !pickupStation || !dropoffStation || !pickupDate || !pickupTime) {
-      alert("Please fill in all required fields.");
+      showPopup("⚠️ Please fill in all required fields.");
       return;
     }
 
-    // ✅ Robust date/time validation before saving
+    // Phone number validation
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phone)) {
+      showPopup("⚠️ Please enter a valid 10-digit phone number.");
+      return;
+    }
+
+    // Date/time validation
     const [year, month, day] = pickupDate.split("-").map(Number);
     const [hours, minutes] = pickupTime.split(":").map(Number);
     const departureDateTime = new Date(year, month - 1, day, hours, minutes);
     const now = new Date();
 
     if (now > departureDateTime) {
-      alert("⚠️ Sorry, this pickup time has already passed. Please choose a valid future time.");
-      return; // stop here, do not save ticket
+      showPopup("⚠️ Sorry, this pickup time has already passed. Please choose a valid future time.");
+      return;
     }
 
     const price = calculatePrice();
@@ -72,21 +124,32 @@ document.addEventListener("DOMContentLoaded", () => {
       pickupDate, pickupTime, price
     };
 
-    courierTickets.push(ticket);
-    localStorage.setItem("courierTickets", JSON.stringify(courierTickets));
+    // Save ticket under current user's account
+    accounts[currentUser].courier.push(ticket);
+    saveAccounts(accounts);
 
     showTicket(ticket);
+    showPopup("✅ Booking successful! Your courier ticket has been created.");
   };
 
   // Cancel ticket
   document.addEventListener("click", (e) => {
     if (e.target && e.target.id === "cancelBtn") {
-      if (courierTickets.length === 0) return;
-      const ticket = courierTickets[courierTickets.length - 1];
-      courierTickets.pop();
-      localStorage.setItem("courierTickets", JSON.stringify(courierTickets));
+      const currentUser = getCurrentUser();
+      const accounts = getAccounts();
 
-      alert(`Courier ticket for ${ticket.name} cancelled. Refund of KES ${ticket.price} will be processed.`);
+      if (!currentUser || !accounts[currentUser]) {
+        showPopup("⚠️ You must be logged in to cancel a courier ticket.");
+        return;
+      }
+
+      if (!accounts[currentUser].courier || accounts[currentUser].courier.length === 0) return;
+
+      const ticket = accounts[currentUser].courier[accounts[currentUser].courier.length - 1];
+      accounts[currentUser].courier.pop();
+      saveAccounts(accounts);
+
+      showPopup(`❌ Courier ticket for ${ticket.name} cancelled. Refund of KES ${ticket.price} will be processed.`);
       ticketDiv.classList.add("hidden");
     }
   });

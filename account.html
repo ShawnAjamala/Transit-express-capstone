@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Transit Express - Login</title>
+  <title>Transit Express - Account</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="login.js" defer></script>
+  <script src="account.js" defer></script>
 </head>
 <body class="bg-gray-100">
 
- <!-- nav bar -->
+<!-- nav bar -->
 <header class="fixed top-0 left-0 w-full bg-gray-100 shadow-md z-50">
   <div class="container mx-auto flex flex-wrap p-5 items-center justify-between">
     <!-- Brand -->
@@ -55,35 +55,26 @@
   </div>
 </header>
 
-
-  <!-- Login / Signup Form -->
-  <main class="flex items-center justify-center h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-96 mt-20">
-      <h2 class="text-2xl font-bold text-orange-500 mb-6 text-center">Login or Sign Up</h2>
-      <form id="loginForm" class="space-y-4">
-        <div>
-          <label for="loginEmail" class="block text-gray-700 font-medium">Email</label>
-          <input type="email" id="loginEmail" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Enter Gmail address" required>
-        </div>
-        <div>
-          <label for="loginPassword" class="block text-gray-700 font-medium">Password</label>
-          <input type="password" id="loginPassword" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Enter password" required>
-        </div>
-        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 font-medium">Login</button>
-      </form>
-      <p class="text-center mt-4 text-sm text-gray-600">Don't have an account? 
-        <a href="sign.html" class="text-blue-600 underline">Sign up</a>
-      </p>
-    </div>
-  </main>
-
-  <!-- Popup Modal -->
-  <div id="popup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center">
-      <p id="popupMessage" class="text-gray-700 mb-4"></p>
-      <button id="popupClose" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">OK</button>
-    </div>
+<main class="flex items-center justify-center h-screen">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-96 mt-20 text-center">
+    <h2 class="text-2xl font-bold text-orange-500 mb-6">Account Management</h2>
+    <p id="accountEmail" class="text-gray-700 mb-4"></p>
+    <p class="text-gray-500 mb-4">Password: <span class="italic">Hidden</span></p>
+    <button id="logoutBtn" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 font-medium">Logout</button>
+    <button id="deleteAccountBtn" class="w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 font-medium">Delete Account</button>
+    <button id="forgotPasswordBtn" class="w-full mt-4 bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 font-medium">Forgot Password</button>
   </div>
+</main>
+
+<!-- Popup Modal -->
+<div id="popup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center">
+    <p id="popupMessage" class="text-gray-700 mb-4"></p>
+    <input id="popupEmailInput" type="email" placeholder="Enter your email" class="hidden w-full px-3 py-2 border rounded mb-4">
+    <button id="popupConfirm" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">OK</button>
+  </div>
+</div>
+
 <!-- Inline nav bar script -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -108,10 +99,7 @@
     }
   });
 </script>
+
 </body>
 </html>
-
-
-
-
 

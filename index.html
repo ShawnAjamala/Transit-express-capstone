@@ -8,7 +8,7 @@
   </head>
   <body>
   
-<!-- Navigation -->
+<!-- nav bar -->
 <header class="fixed top-0 left-0 w-full bg-gray-100 shadow-md z-50">
   <div class="container mx-auto flex flex-wrap p-5 items-center justify-between">
     <!-- Brand -->
@@ -16,39 +16,38 @@
       Transit Express
     </a>
 
-    <!-- Hamburger (checkbox hack with peer) -->
+    <!-- Mobile Menu -->
     <div class="md:hidden">
       <input type="checkbox" id="menu-toggle" class="hidden peer" />
       <label for="menu-toggle" class="cursor-pointer text-orange-500">
-        <!-- Hamburger icon -->
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </label>
-
-      <!-- Mobile Menu -->
-      <nav class="hidden peer-checked:flex flex-col space-y-4 mt-4 bg-gray-100 p-4 rounded shadow-md">
+      <nav id="mobileMenu" class="hidden peer-checked:flex flex-col space-y-4 mt-4 bg-gray-100 p-4 rounded shadow-md">
         <a href="index.html" class="text-orange-500 hover:text-blue-600 font-medium">Home</a>
         <a href="routes.html" class="text-orange-500 hover:text-blue-600 font-medium">Routes</a>
         <a href="courier.html" class="text-orange-500 hover:text-blue-600 font-medium">Courier Services</a>
         <a href="booking.html" class="text-orange-500 hover:text-blue-600 font-medium">Booking</a>
         <a href="viewtickets.html" class="text-orange-500 hover:text-blue-600 font-medium">View Tickets</a>
-        <a href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium">
-          Login
+        <!-- Dynamic link -->
+        <a id="navActionMobile" href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium">
+          Login / Sign Up
         </a>
       </nav>
     </div>
 
     <!-- Desktop Menu -->
-    <nav class="hidden md:flex md:flex-row md:items-center md:space-x-6">
+    <nav id="desktopMenu" class="hidden md:flex md:flex-row md:items-center md:space-x-6">
       <a href="index.html" class="text-orange-500 hover:text-blue-600 font-medium">Home</a>
       <a href="routes.html" class="text-orange-500 hover:text-blue-600 font-medium">Routes</a>
       <a href="courier.html" class="text-orange-500 hover:text-blue-600 font-medium">Courier Services</a>
       <a href="booking.html" class="text-orange-500 hover:text-blue-600 font-medium">Booking</a>
       <a href="viewtickets.html" class="text-orange-500 hover:text-blue-600 font-medium">View Tickets</a>
-      <a href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium">
-        Login
+      <!-- Dynamic link -->
+      <a id="navActionDesktop" href="login.html" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium">
+        Login / Sign Up
       </a>
     </nav>
   </div>
@@ -196,6 +195,30 @@
         </div>
       </div>
     </section>
+<!-- Inline nav bar script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const navActionDesktop = document.getElementById("navActionDesktop");
+    const navActionMobile = document.getElementById("navActionMobile");
+
+    const currentUser = localStorage.getItem("currentUser");
+    const accounts = JSON.parse(localStorage.getItem("accounts")) || {};
+
+    if (currentUser && accounts[currentUser]) {
+      // Logged in → show Account
+      navActionDesktop.textContent = "Account";
+      navActionDesktop.href = "account.html";
+      navActionMobile.textContent = "Account";
+      navActionMobile.href = "account.html";
+    } else {
+      // Not logged in → show Login / Sign Up
+      navActionDesktop.textContent = "Login / Sign Up";
+      navActionDesktop.href = "login.html";
+      navActionMobile.textContent = "Login / Sign Up";
+      navActionMobile.href = "login.html";
+    }
+  });
+</script>
   </body>
   <footer class="bg-orange-500 text-white body-font">
     <div class="container px-5 py-8 mx-auto flex flex-wrap justify-between">
